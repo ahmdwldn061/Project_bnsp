@@ -1,0 +1,22 @@
+import { Pool } from "pg";
+import dotenv from "dotenv";
+
+dotenv.config();
+
+const db = new Pool({
+  host: process.env.DB_HOST,
+  port: Number(process.env.DB_PORT),
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
+});
+
+db.on("connect", () => {
+  console.log("PostgreSQL berhasil terhubung!");
+});
+
+db.on("error", (error) => {
+  console.error("Database error:", error);
+});
+
+export default db;
